@@ -379,6 +379,11 @@ Group.prototype.getHeadersAndRows = function (noCalc) {
 			this.groupList.forEach(function (group) {
 				output = output.concat(group.getHeadersAndRows(noCalc));
 			});
+
+			this.calcs.bottom = this.groupManager.table.modules.columnCalcs.generateBottomRow(this.groupList.reduce(function (acc, group) {
+				return acc.concat(group.rows);
+			}, []));
+			output.push(this.calcs.bottom);
 		} else {
 			if (!noCalc && this.groupManager.table.options.columnCalcs != "table" && this.groupManager.table.modExists("columnCalcs") && this.groupManager.table.modules.columnCalcs.hasTopCalcs()) {
 				if (this.calcs.top) {
